@@ -1,9 +1,12 @@
 import logging
+import os
+import redis  # Import Redis
+import pyrogram
+from pyrogram import Client, idle
+
 logging.basicConfig(level=logging.DEBUG,
                     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
-
-import os
 
 # the secret configuration specific things
 if bool(os.environ.get("WEBHOOK", False)):
@@ -11,9 +14,15 @@ if bool(os.environ.get("WEBHOOK", False)):
 else:
     from config import Config
 
-import pyrogram
+# Set logging level for pyrogram
 logging.getLogger("pyrogram").setLevel(logging.WARNING)
-from pyrogram import Client, idle
+
+# Initialize Redis
+redis_uri = os.getenv("REDIS_URI")
+redis_pass = os.getenv("REDIS_PASS")
+redis_client = redis.from_url(redis_uri, password=redis_pass)
+
+# Bot setup
 if __name__ == "__main__" :
     # Creating essential directories, if they does not exists
     if not os.path.isdir(Config.DOWNLOAD_LOCATION):
@@ -22,6 +31,7 @@ if __name__ == "__main__" :
         os.makedirs(Config.ADMIN_LOCATION)
     if not os.path.isdir(Config.CREDENTIALS_LOCATION):
         os.makedirs(Config.CREDENTIALS_LOCATION)        
+    
     plugins = dict(
         root="plugins"
     )
