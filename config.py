@@ -22,7 +22,7 @@ class Config(object):
     OWNER_ID = os.environ.get("OWNER_ID", 7170426058) # Your(owner's) telegram id
     #If deploying on vps edit the above value as example := OWNER_ID = Your-telegram id-without-inverted-commas
     
-    REDIS_URI = os.environ.get("REDIS_URI", "redis://redis-16253.c257.us-east-1-3.ec2.redns.redis-cloud.com:16253") # Get This Value from http://redislabs.com/try-free (If you don't know how to obtain the a video tutorial is available here:- https://t.me/botzupdate/5)
+    REDIS_URI = os.environ.get("REDIS_URI", "redis://default:YvHEhzWTOCq3VTg4Cz6HRVR9FDH0e5op@redis-16253.c257.us-east-1-3.ec2.redns.redis-cloud.com:16253") # Get This Value from http://redislabs.com/try-free (If you don't know how to obtain the a video tutorial is available here:- https://t.me/botzupdate/5)
     #If deploying on vps edit the above value as example := REDIS_URI = "Your-Redis-Endpoint-inside-inverted-commas."
     
     REDIS_PASS = os.environ.get("REDIS_PASS", "YvHEhzWTOCq3VTg4Cz6HRVR9FDH0e5op") # Get This Value from http://redislabs.com/try-free (If you don't know how to obtain the a video tutorial is available here:- https://t.me/botzupdate/5)
