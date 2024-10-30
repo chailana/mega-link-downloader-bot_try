@@ -1,5 +1,5 @@
 import os
-
+#redis://redis-16253.c257.us-east-1-3.ec2.redns.redis-cloud.com:16253
 class Config(object):
     TG_BOT_TOKEN = os.environ.get("TG_BOT_TOKEN", "7176424785:AAEusrLtmtGgRisJ6Pje6yAnN-ZbdZMoO1Q") # Make a bot from https://t.me/BotFather and enter the token here
     #If deploying on vps edit the above value as example := TG_BOT_TOKEN = "Your-bot-token-inside-inverted-commas."
