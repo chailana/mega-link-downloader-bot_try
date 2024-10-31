@@ -273,14 +273,14 @@ Make sure your link is <b>not password protected or encrypted or private</b>"""
                                 logger.info(e)
                                 return
                 
-            else:  # If fname was not assigned successfully.
+            else:  
                 await bot.edit_message_text(
                     chat_id=update.chat.id,
                     text="Error: File name could not be determined.",
                     message_id=usermsg.id
                 )
                 
-        else:  # Handle folder links.
+        else:  
             await bot.send_message(
                 chat_id=update.chat.id,
                 text=f"""Sorry! Folder links are not supported!""",
