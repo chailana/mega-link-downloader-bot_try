@@ -40,4 +40,4 @@ COPY . /app
 RUN if [ -f requirements.txt ]; then pip3 install -r requirements.txt; fi
 
 # Default command (replace 'bot.py' with your bot script if different)
-CMD ["python3", "bot.py"]
+CMD gunicorn app:app & python3 bot.py
