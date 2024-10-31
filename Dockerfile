@@ -25,8 +25,7 @@ RUN apt-get update && apt-get upgrade -y && apt-get install -y --no-install-reco
     docbook-xml \
     autoconf \
     libtool \
-    automake \
-    mega-tools && \
+    automake && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Installing MEGAcmd
