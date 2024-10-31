@@ -1,6 +1,7 @@
-# Solely coded by xmysteriousx
+# Start with an Ubuntu 20.04 base image
 FROM ubuntu:20.04
 
+# Set environment variables
 ENV DEBIAN_FRONTEND=noninteractive
 ENV TZ=Asia/Kolkata
 
@@ -8,7 +9,7 @@ ENV TZ=Asia/Kolkata
 RUN mkdir -p /app && chmod 777 /app
 WORKDIR /app
 
-# Install necessary packages
+# Update the package list and install dependencies
 RUN apt-get update && apt-get upgrade -y && apt-get install -y --no-install-recommends \
     curl \
     git \
@@ -25,21 +26,16 @@ RUN apt-get update && apt-get upgrade -y && apt-get install -y --no-install-reco
     docbook-xml \
     autoconf \
     libtool \
-    automake && \
+    automake \
+    snapd && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Installing MEGAcmd
-RUN wget -O /tmp/megacmd.deb https://mega.nz/linux/MEGAsync/xUbuntu_20.04/amd64/megacmd-xUbuntu_20.04_amd64.deb && \
-    apt-get install -y /tmp/megacmd.deb && \
-    rm /tmp/megacmd.deb
+# Enable snapd, install and set up MEGAcmd
+RUN systemctl enable snapd && \
+    snap install core && \
+    snap install megacmd --classic
 
-# Installing megatools from source
-RUN git clone https://github.com/XMYSTERlOUSX/megatools /tmp/megatools && \
-    cd /tmp/megatools && \
-    meson b && ninja -C b && ninja -C b install && \
-    rm -rf /tmp/megatools
-
-# Copying the content of the local src directory to the working directory
+# Copy the content of the local src directory to the working directory
 COPY . .
 
 # Install Python dependencies
