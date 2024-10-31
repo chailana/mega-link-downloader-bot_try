@@ -1,3 +1,4 @@
+from pyrogram.enums import ParseMode
 import logging
 logging.basicConfig(level=logging.DEBUG,
                     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
@@ -57,13 +58,13 @@ async def send_splitted_file(bot, update, tg_send_type, thumb_image_path, splite
             chat_id=update.chat.id,
             video=splited_file,
             caption=description,
-            parse_mode="HTML",
+            parse_mode=ParseMode.HTML,
             duration=duration,
             width= 300,
             height= 200,
             supports_streaming=True,
             thumb=thumb_image_path,
-            reply_to_message_id=update.message_id,
+            reply_to_message_id=update.id,
             progress=progress_for_pyrogram,
             progress_args=(
                 Translation.UPLOAD_START,
@@ -78,8 +79,8 @@ async def send_splitted_file(bot, update, tg_send_type, thumb_image_path, splite
             document=splited_file,
             thumb=thumb_image_path,
             caption=description,
-            parse_mode="HTML",
-            reply_to_message_id=update.message_id,
+            parse_mode=ParseMode.HTML,
+            reply_to_message_id=update.id,
             progress=progress_for_pyrogram,
             progress_args=(
                 Translation.UPLOAD_START,
@@ -126,13 +127,13 @@ async def send_file(bot, update, tg_send_type, thumb_image_path, download_direct
             chat_id=update.chat.id,
             video=download_directory,
             caption=description,
-            parse_mode="HTML",
+            parse_mode=ParseMode.HTML,
             duration=duration,
             width= 300,
             height= 200,
             supports_streaming=True,
             thumb=thumb_image_path,
-            reply_to_message_id=update.message_id,
+            reply_to_message_id=update.id,
             progress=progress_for_pyrogram,
             progress_args=(
                 Translation.UPLOAD_START,
@@ -147,8 +148,8 @@ async def send_file(bot, update, tg_send_type, thumb_image_path, download_direct
             document=download_directory,
             thumb=thumb_image_path,
             caption=description,
-            parse_mode="HTML",
-            reply_to_message_id=update.message_id,
+            parse_mode=ParseMode.HTML,
+            reply_to_message_id=update.id,
             progress=progress_for_pyrogram,
             progress_args=(
                 Translation.UPLOAD_START,
