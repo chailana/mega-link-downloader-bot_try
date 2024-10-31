@@ -9,22 +9,19 @@ RUN apt-get update && apt-get upgrade -y && \
     apt-get install -y --no-install-recommends \
     wget \
     curl \
-    gnupg \
-    ffmpeg \
-    python3 \
-    python3-pip
+    gnupg2 \
+    software-properties-common
 
 # Add MediaInfo repository for installing mediainfo dependencies
-RUN wget -qO /etc/apt/trusted.gpg.d/mediaarea.asc https://mediaarea.net/repo/deb/ubuntu/pubkey.gpg && \
-    echo "deb https://mediaarea.net/repo/deb/ubuntu $(lsb_release -sc) main" | tee /etc/apt/sources.list.d/mediaarea.list
+RUN add-apt-repository ppa:mediaarea/mediaarea && \
+    apt-get update
 
-# Update and install MEGAcmd dependencies
-RUN apt-get update && \
-    apt-get install -y \
+# Install required dependencies
+RUN apt-get install -y \
     mediainfo \
     libmediainfo0v5 \
     libzen0v5 \
-    gpg
+    gnupg
 
 # Download MEGAcmd package and install
 RUN wget -O /tmp/megacmd.deb https://mega.nz/linux/MEGAsync/xUbuntu_20.04/amd64/megacmd-xUbuntu_20.04_amd64.deb && \
