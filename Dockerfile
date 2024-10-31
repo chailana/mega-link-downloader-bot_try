@@ -29,9 +29,9 @@ RUN apt-get update && apt-get upgrade -y && apt-get install -y --no-install-reco
     mega-tools && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Installing Megacmd
+# Installing MEGAcmd
 RUN wget -O /tmp/megacmd.deb https://mega.nz/linux/MEGAsync/xUbuntu_20.04/amd64/megacmd-xUbuntu_20.04_amd64.deb && \
-    apt-get install -y ./tmp/megacmd.deb && \
+    apt-get install -y /tmp/megacmd.deb && \
     rm /tmp/megacmd.deb
 
 # Installing megatools from source
