@@ -273,7 +273,7 @@ Make sure your link is <b>not password protected or encrypted or private</b>"""
                                 logger.info(e)
                                 return
                 
-            else:  # If fname was not assigned successfully.
+           else:  # If fname was not assigned successfully.
                 await bot.edit_message_text(
                     chat_id=update.chat.id,
                     text="Error: File name could not be determined.",
