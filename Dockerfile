@@ -1,47 +1,47 @@
-# Start with an Ubuntu 20.04 base image
+# Use Ubuntu 20.04 as base image
 FROM ubuntu:20.04
 
-# Set environment variables
+# Set environment variables to prevent interactive prompts during build
 ENV DEBIAN_FRONTEND=noninteractive
-ENV TZ=Asia/Kolkata
 
-# Set up the working directory in the container
-RUN mkdir -p /app && chmod 777 /app
-WORKDIR /app
-
-# Update the package list and install dependencies
-RUN apt-get update && apt-get upgrade -y && apt-get install -y --no-install-recommends \
-    curl \
-    git \
-    python3 \
-    python3-pip \
-    make \
+# Update system and install basic dependencies
+RUN apt-get update && apt-get upgrade -y && \
+    apt-get install -y --no-install-recommends \
     wget \
+    curl \
+    gnupg \
     ffmpeg \
-    meson \
-    libglib2.0-dev \
-    libssl-dev \
-    libcurl4-openssl-dev \
-    asciidoc \
-    docbook-xml \
-    autoconf \
-    libtool \
-    automake && \
-    apt-get clean && rm -rf /var/lib/apt/lists/*
+    python3 \
+    python3-pip
 
-# Install MEGAcmd dependencies manually
-RUN apt-get install -y libc-ares2 libmediainfo0v5 libzen0v5 gpg
+# Add MediaInfo repository for installing mediainfo dependencies
+RUN wget -qO /etc/apt/trusted.gpg.d/mediaarea.asc https://mediaarea.net/repo/deb/ubuntu/pubkey.gpg && \
+    echo "deb https://mediaarea.net/repo/deb/ubuntu $(lsb_release -sc) main" | tee /etc/apt/sources.list.d/mediaarea.list
 
-# Download and install MEGAcmd directly from Mega's repository
+# Update and install MEGAcmd dependencies
+RUN apt-get update && \
+    apt-get install -y \
+    mediainfo \
+    libmediainfo0v5 \
+    libzen0v5 \
+    gpg
+
+# Download MEGAcmd package and install
 RUN wget -O /tmp/megacmd.deb https://mega.nz/linux/MEGAsync/xUbuntu_20.04/amd64/megacmd-xUbuntu_20.04_amd64.deb && \
     apt-get install -y /tmp/megacmd.deb && \
     rm /tmp/megacmd.deb
 
-# Copy the content of the local src directory to the working directory
-COPY . .
+# Clean up to reduce image size
+RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Install Python dependencies
-RUN pip3 install --no-cache-dir -r requirements.txt
+# Set working directory
+WORKDIR /app
 
-# Start the application
-CMD gunicorn app:app & python3 bot.py
+# Copy bot files to /app
+COPY . /app
+
+# Install required Python packages from requirements.txt if it exists
+RUN if [ -f requirements.txt ]; then pip3 install -r requirements.txt; fi
+
+# Default command (replace 'bot.py' with your bot script if different)
+CMD ["python3", "bot.py"]
