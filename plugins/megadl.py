@@ -206,7 +206,7 @@ Make sure your link is <b>not password protected or encrypted or private</b>"""
                                 await bot.edit_message_text(
                                     text=Translation.AFTER_SUCCESSFUL_UPLOAD_MSG_WITH_TS.format(time_taken_for_download, time_taken_for_upload),
                                     chat_id=update.chat.id,
-                                    message_id=usermsg.id,
+                                    message_id=usermsg.message_id,
                                     disable_web_page_preview=True
                                 )
 
@@ -320,4 +320,4 @@ def download_mega_docs(megalink, tmp_directory_for_each_user, cred_location, upd
             process = subprocess.run(["megadl", megalink, "--path", tmp_directory_for_each_user])
     except Exception as e:
         logger.info(e)
-            
+                
