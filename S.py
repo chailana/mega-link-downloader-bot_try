@@ -230,7 +230,7 @@ Make sure your link is <b>not password protected or encrypted or private</b>"""
                                 logger.info(e)
                                 return
 
-                    else:
+                    else:  # If file size is less than or equal to 2GB.
                         try:
                             await bot.edit_message_text(
                                 chat_id=update.chat.id,
@@ -273,14 +273,14 @@ Make sure your link is <b>not password protected or encrypted or private</b>"""
                                 logger.info(e)
                                 return
                 
-            else:  
+            else:  # If fname was not assigned successfully.
                 await bot.edit_message_text(
                     chat_id=update.chat.id,
                     text="Error: File name could not be determined.",
                     message_id=usermsg.id
                 )
                 
-        else:  
+        else:  # Handle folder links.
             await bot.send_message(
                 chat_id=update.chat.id,
                 text=f"""Sorry! Folder links are not supported!""",
@@ -320,4 +320,3 @@ def download_mega_docs(megalink, tmp_directory_for_each_user, cred_location, upd
             process = subprocess.run(["megadl", megalink, "--path", tmp_directory_for_each_user])
     except Exception as e:
         logger.info(e)
-                    
