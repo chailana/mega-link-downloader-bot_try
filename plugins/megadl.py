@@ -57,7 +57,7 @@ async def mega_dl(bot, update):
             usermsg = await bot.send_message(
                 chat_id=update.chat.id,
                 text=f"""<b>Processing...⏳</b>""",
-                reply_to_message_id=update.message_id
+                reply_to_message_id=update.id
             )
             description = ""
             megalink = None
@@ -103,7 +103,7 @@ async def mega_dl(bot, update):
                 await bot.edit_message_text(
                     chat_id=update.chat.id,
                     text="Error: "+ str(e) + "\n\n" + error_text,
-                    message_id=usermsg.message_id
+                    message_id=usermsg.id
                 )
                 return
             if a == 1:
@@ -113,7 +113,7 @@ async def mega_dl(bot, update):
                     await bot.edit_message_text(
                         chat_id=update.chat.id,
                         text="<b>Files detected</b> : " + fname + "\n" + "<b>Size</b> : " + humanbytes(the_file_size) + "\n" + "\n" + Translation.DOWNLOAD_START,
-                        message_id=usermsg.message_id
+                        message_id=usermsg.id
                     )
                     megalink = url
                     if megalink is not None:
@@ -149,7 +149,7 @@ async def mega_dl(bot, update):
                                 await bot.edit_message_text(
                                     text="Error: "+ str(e),
                                     chat_id=update.chat.id,
-                                    message_id=usermsg.message_id
+                                    message_id=usermsg.id
                                 )
                                 shutil.rmtree(tmp_directory_for_each_user)
                                 return
@@ -171,7 +171,7 @@ async def mega_dl(bot, update):
                                 await bot.edit_message_text(
                                     text="Error: "+ str(e),
                                     chat_id=update.chat.id,
-                                    message_id=usermsg.message_id
+                                    message_id=usermsg.id
                                 )
                                 shutil.rmtree(tmp_directory_for_each_user)
                                 return
@@ -187,7 +187,7 @@ async def mega_dl(bot, update):
                                 await bot.edit_message_text(
                                     chat_id=update.chat.id,
                                     text="<b>Detected Size</b> : " + humanbytes(file_size) + "\n" + "\n" + "<i>Splitting files...</i>\n\n<code>The downloaded file is bigger than 2GB! But due to telegram API limits I can't upload files which are bigger than 2GB 🥺. So I will split the files and upload them to you. 😇</code>",
-                                    message_id=usermsg.message_id
+                                    message_id=usermsg.id
                                 )
                                 splitting_size = 2040108421
                                 if not os.path.exists(splitted_files_directory):
@@ -211,7 +211,7 @@ async def mega_dl(bot, update):
                                             await bot.edit_message_text(
                                                 chat_id=update.chat.id,
                                                 text=Translation.UPLOAD_START,
-                                                message_id=usermsg.message_id
+                                                message_id=usermsg.id
                                             )
                                             await send_splitted_file(bot, update, tg_send_type, thumb_image_path, splited_file, tmp_directory_for_each_user, description, usermsg)
                                     end_two = datetime.now()
@@ -232,7 +232,7 @@ async def mega_dl(bot, update):
                                 await bot.edit_message_text(
                                     text="Error: "+ str(e),
                                     chat_id=update.chat.id,
-                                    message_id=usermsg.message_id
+                                    message_id=usermsg.id
                                 )
                                 try:
                                     shutil.rmtree(tmp_directory_for_each_user)
@@ -245,7 +245,7 @@ async def mega_dl(bot, update):
                                 await bot.edit_message_text(
                                     chat_id=update.chat.id,
                                     text=Translation.UPLOAD_START,
-                                    message_id=usermsg.message_id
+                                    message_id=usermsg.id
                                 )
                                 await send_file(bot, update, tg_send_type, thumb_image_path, download_directory, tmp_directory_for_each_user, description, usermsg)
                                 end_two = datetime.now()
@@ -253,7 +253,7 @@ async def mega_dl(bot, update):
                                 await bot.edit_message_text(
                                     text=Translation.AFTER_SUCCESSFUL_UPLOAD_MSG_WITH_TS.format(time_taken_for_download, time_taken_for_upload),
                                     chat_id=update.chat.id,
-                                    message_id=usermsg.message_id,
+                                    message_id=usermsg.id,
                                     disable_web_page_preview=True
                                 )
                                 try:
@@ -267,7 +267,7 @@ async def mega_dl(bot, update):
                                 await bot.edit_message_text(
                                     text="Error: "+ str(e),
                                     chat_id=update.chat.id,
-                                    message_id=usermsg.message_id
+                                    message_id=usermsg.id
                                 )
                                 try:
                                     shutil.rmtree(tmp_directory_for_each_user)
@@ -280,7 +280,7 @@ async def mega_dl(bot, update):
                     await bot.edit_message_text(
                         text="Error: "+ str(e),
                         chat_id=update.chat.id,
-                        message_id=usermsg.message_id
+                        message_id=usermsg.id
                     )
                     try:
                         shutil.rmtree(tmp_directory_for_each_user)
@@ -292,14 +292,14 @@ async def mega_dl(bot, update):
             await bot.send_message(
                 chat_id=update.chat.id,
                 text=f"""Sorry! Folder links are not supported!""",
-                reply_to_message_id=update.message_id
+                reply_to_message_id=update.id
             )
             return
     else:
         await bot.send_message(
             chat_id=update.chat.id,
             text=f"""<b>I am a mega.nz link downloader bot! 😑</b>\n\nThis not a mega.nz link. 😡""",
-            reply_to_message_id=update.message_id
+            reply_to_message_id=update.id
         )
         return
 
