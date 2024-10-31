@@ -1,4 +1,4 @@
-# Use Ubuntu 20.04 as base image
+# Use Ubuntu 20.04 as the base image
 FROM ubuntu:20.04
 
 # Set environment variables to prevent interactive prompts during build
@@ -10,18 +10,11 @@ RUN apt-get update && apt-get upgrade -y && \
     wget \
     curl \
     gnupg2 \
-    software-properties-common
-
-# Add MediaInfo repository for installing mediainfo dependencies
-RUN add-apt-repository ppa:mediaarea/mediaarea && \
-    apt-get update
-
-# Install required dependencies
-RUN apt-get install -y \
+    software-properties-common \
     mediainfo \
     libmediainfo0v5 \
     libzen0v5 \
-    gnupg
+    gpg
 
 # Download MEGAcmd package and install
 RUN wget -O /tmp/megacmd.deb https://mega.nz/linux/MEGAsync/xUbuntu_20.04/amd64/megacmd-xUbuntu_20.04_amd64.deb && \
