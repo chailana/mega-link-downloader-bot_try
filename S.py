@@ -273,7 +273,7 @@ Make sure your link is <b>not password protected or encrypted or private</b>"""
                                 logger.info(e)
                                 return
                 
-           else:  # If fname was not assigned successfully.
+            else:  # If fname was not assigned successfully.
                 await bot.edit_message_text(
                     chat_id=update.chat.id,
                     text="Error: File name could not be determined.",
@@ -320,3 +320,4 @@ def download_mega_docs(megalink, tmp_directory_for_each_user, cred_location, upd
             process = subprocess.run(["megadl", megalink, "--path", tmp_directory_for_each_user])
     except Exception as e:
         logger.info(e)
+                    
