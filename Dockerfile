@@ -26,14 +26,16 @@ RUN apt-get update && apt-get upgrade -y && apt-get install -y --no-install-reco
     docbook-xml \
     autoconf \
     libtool \
-    automake \
-    snapd && \
+    automake && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Enable snapd, install and set up MEGAcmd
-RUN systemctl enable snapd && \
-    snap install core && \
-    snap install megacmd --classic
+# Install MEGAcmd dependencies manually
+RUN apt-get install -y libc-ares2 libmediainfo0v5 libzen0v5 gpg
+
+# Download and install MEGAcmd directly from Mega's repository
+RUN wget -O /tmp/megacmd.deb https://mega.nz/linux/MEGAsync/xUbuntu_20.04/amd64/megacmd-xUbuntu_20.04_amd64.deb && \
+    apt-get install -y /tmp/megacmd.deb && \
+    rm /tmp/megacmd.deb
 
 # Copy the content of the local src directory to the working directory
 COPY . .
